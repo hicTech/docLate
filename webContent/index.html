@@ -4,12 +4,109 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>docLate</title>
 		<link type='text/css' rel='stylesheet' href="css/style.css">
+		<link type='text/css' rel='stylesheet' href="css/form/form.css">
+		<link type='text/css' rel='stylesheet' href="css/button/button.css">
 		<script type="text/javascript" src="lib/underscore/underscore.js"></script>
+		<script type="text/javascript" src="lib/underscore/_plus.js"></script>
 		<script type="text/javascript" src="lib/jquery/jquery-v1.7.1.js"></script>
 		<script type="text/javascript" src="lib/jqueryUI/js/jquery-ui-1.8.17.custom.min.js"></script>
 	</head>
 	
 	<body>
-		ciao
+		<div class="menu">
+			<button class="BUTTON">Aggiungi campo testo</button>
+			<button class="BUTTON">Aggiungi campo data</button>
+			<button class="BUTTON" data-role="addx">Aggiungi campo croce</button>
+			<button class="BUTTON green" data-role="getJson">getJson</button>
+			<button class="BUTTON blue" data-role="dragg">Attiva/Disattiva drag</button>
+		</div>
+		
+		<div class="docLet-widget"  style="top:10px;left:20px">
+			<div contenteditable="true">Testo editabile</div>
+			<div style="position:absolute;bottom:0px">
+			<button class="BUTTON red little">-</button></div>
+		</div>
+		
+		<img src="papers/f24.png" style="margin:0px;width:1000px;position: relative:top:0px; left:0px;z-index:10"/>
+		
+		
+		
+		
 	</body>
+	
+	<script>
+		
+		$(document).ready(function(){
+
+			
+			$("[data-role='addx']").click(function(){
+				addDocLateWidget();
+			})
+			
+			$("[data-role='getJson']").click(function(){
+				alert(_.toString(getJsonWidgets()));
+			});
+			
+		
+			
+			
+			
+			function getJsonWidgets(){
+				var json = new Array();
+				$(".docLet-widget").each(function(){
+					var wg = $(this);
+					var pos = getDocLateWidgetPosition(wg);
+					var id = wg.attr("id");
+					var type = wg.attr("data-widgetType");
+					var value = getDocLateWidgetValue(wg,type)
+					json.push({
+						"id" : id,
+						"type" : type,
+						"value" : value,
+						"position" : pos
+					});
+					
+				})
+				return json;
+			}
+			
+			
+			function getDocLateWidgetHTML(type){
+				if(type == "x"){
+					var id = _.id("wg_");
+					return '<div class="docLet-widget" id="'+id+'" data-widgetType="x" style="top:10px;left:20px">'+
+								'<input type="checkbox" id="hand"></input>'+
+								'<div style="position:absolute;bottom:0px">'+
+								'<button class="BUTTON red little">-</button></div>'+
+							'</div>';
+				}
+			}
+			
+			function getDocLateWidgetPosition(wg){
+				return wg.position();
+			}
+			
+			function getDocLateWidgetValue(wg,type){
+				if(type == "x"){
+					return wg.find("input").is(":checked")
+				}
+			}
+			
+			function setDocLateWidgetPosition(wg,position){
+				wg.css("top",position.top);
+				wg.css("left",position.left);
+			}
+			
+			
+			function addDocLateWidget(){
+				var $wg = $(getDocLateWidgetHTML("x"));
+				$("body").append($wg);
+				$wg.find("button").click(function(){
+					$wg.remove();
+				})
+				$wg.draggable();
+			}
+		})
+		
+	</script>
 </html>
