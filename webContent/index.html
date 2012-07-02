@@ -3,6 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>docLate</title>
+		<link type='text/css' rel='stylesheet' href="lib/jqueryUI/css/smoothness/jquery-ui-1.8.17.custom.css">
 		<link type='text/css' rel='stylesheet' href="css/style.css">
 		<link type='text/css' rel='stylesheet' href="css/form/form.css">
 		<link type='text/css' rel='stylesheet' href="css/button/button.css">
@@ -10,24 +11,23 @@
 		<script type="text/javascript" src="lib/underscore/_plus.js"></script>
 		<script type="text/javascript" src="lib/jquery/jquery-v1.7.1.js"></script>
 		<script type="text/javascript" src="lib/jqueryUI/js/jquery-ui-1.8.17.custom.min.js"></script>
+		
+		
+		
 	</head>
 	
 	<body>
-		<div class="menu">
-			<button class="BUTTON">Aggiungi campo testo</button>
-			<button class="BUTTON">Aggiungi campo data</button>
-			<button class="BUTTON" data-role="addx">Aggiungi campo croce</button>
-			<button class="BUTTON green" data-role="getJson">getJson</button>
-			<button class="BUTTON blue" data-role="dragg">Attiva/Disattiva drag</button>
-		</div>
 		
-		<div class="docLet-widget"  style="top:10px;left:20px">
-			<div contenteditable="true">Testo editabile</div>
-			<div style="position:absolute;bottom:0px">
-			<button class="BUTTON red little">-</button></div>
+		<div class="menu">
+			<button class="BUTTON medium" data-role="addText">Aggiungi campo testo</button>
+			<button class="BUTTON medium" data-role="addDate">Aggiungi campo data</button>
+			<button class="BUTTON medium" data-role="addx">Aggiungi campo croce</button>
+			<button class="BUTTON green medium" data-role="getJson">getJson</button>
+			<button class="BUTTON blue medium" data-role="dragg">Attiva/Disattiva drag</button>
 		</div>
 		
 		<img src="papers/f24.png" style="margin:0px;width:1000px;position: relative:top:0px; left:0px;z-index:10"/>
+		
 		
 		
 		
@@ -40,14 +40,25 @@
 
 			
 			$("[data-role='addx']").click(function(){
-				addDocLateWidget();
-			})
+				addDocLateWidget("x");
+			});
+			
+			$("[data-role='addText']").click(function(){
+				addDocLateWidget("text");
+			});
+			
+			$("[data-role='addDate']").click(function(){
+				addDocLateWidget("date");
+			});
 			
 			$("[data-role='getJson']").click(function(){
 				alert(_.toString(getJsonWidgets()));
 			});
 			
-		
+			
+			
+			
+			
 			
 			
 			
@@ -58,13 +69,30 @@
 					var pos = getDocLateWidgetPosition(wg);
 					var id = wg.attr("id");
 					var type = wg.attr("data-widgetType");
-					var value = getDocLateWidgetValue(wg,type)
-					json.push({
-						"id" : id,
-						"type" : type,
-						"value" : value,
-						"position" : pos
-					});
+					var value = getDocLateWidgetValue(wg,type);
+					if(type=="x"){
+						json.push({
+							"id" : id,
+							"type" : type,
+							"value" : value,
+							"position" : pos
+						});
+					}
+					else{
+						if(type=="text"){
+							json.push({
+								"id" : id,
+								"type" : type,
+								"value" : value,
+								"line-height" : wg.find(".text").css("line-height"),
+								"font-size" : wg.find(".text").css("font-size"),
+								"letter-spacing" : wg.find(".text").css("letter-spacing"),
+								"value" : value,
+								"position" : pos
+							});
+						}
+					}
+					
 					
 				})
 				return json;
@@ -72,13 +100,42 @@
 			
 			
 			function getDocLateWidgetHTML(type){
+				var id = _.id("wg_");
 				if(type == "x"){
-					var id = _.id("wg_");
-					return '<div class="docLet-widget" id="'+id+'" data-widgetType="x" style="top:10px;left:20px">'+
+					return '<div class="docLet-widget x" id="'+id+'" data-widgetType="x" style="top:40px;left:320px">'+
 								'<input type="checkbox" id="hand"></input>'+
 								'<div style="position:absolute;bottom:0px">'+
-								'<button class="BUTTON red little">-</button></div>'+
+								'<button class="BUTTON red little" data-role="remove">X</button></div>'+
 							'</div>';
+				}
+				else{
+					if(type=="text"){
+						return '<div class="docLet-widget text" id="'+id+'" data-widgetType="text">'+
+									'<div class="text" contentEditable="true">Scrivi testo</div>'+
+									'<span ><button class="BUTTON red little" data-role="remove">X</button></span>'+
+									'<span style="left:30px"><button class="BUTTON little" data-role="c+">Ch+</button></span>'+
+									'<span style="left:60px"><button class="BUTTON little" data-role="c-">Ch-</button></span>'+
+									'<span style="left:90px"><button class="BUTTON little" data-role="l+">L+</button></span>'+
+									'<span style="left:110px"><button class="BUTTON little" data-role="l-">L-</button></span>'+
+									'<span style="left:140px"><button class="BUTTON little" data-role="s+">S+</button></span>'+
+									'<span style="left:165px"><button class="BUTTON little" data-role="s-">S-</button></span>'+
+									'<div class="dragg_handle">dragg</div>'+
+								'</div>';
+					}else{
+						if(type=="date"){
+							return '<div class="docLet-widget text date" id="'+id+'" data-widgetType="date">'+
+										'<div><input></div>'+
+										'<span ><button class="BUTTON red little" data-role="remove">X</button></span>'+
+										'<span style="left:30px"><button class="BUTTON little" data-role="c+">Ch+</button></span>'+
+										'<span style="left:60px"><button class="BUTTON little" data-role="c-">Ch-</button></span>'+
+										'<span style="left:90px"><button class="BUTTON little" data-role="l+">L+</button></span>'+
+										'<span style="left:110px"><button class="BUTTON little" data-role="l-">L-</button></span>'+
+										'<span style="left:140px"><button class="BUTTON little" data-role="s+">S+</button></span>'+
+										'<span style="left:165px"><button class="BUTTON little" data-role="s-">S-</button></span>'+
+										'<div class="dragg_handle">dragg</div>'+
+									'</div>';
+						}
+					}
 				}
 			}
 			
@@ -90,6 +147,11 @@
 				if(type == "x"){
 					return wg.find("input").is(":checked")
 				}
+				else{
+					if(type == "text"){
+						return escape(wg.find(".text").html());
+					}
+				}
 			}
 			
 			function setDocLateWidgetPosition(wg,position){
@@ -98,13 +160,73 @@
 			}
 			
 			
-			function addDocLateWidget(){
-				var $wg = $(getDocLateWidgetHTML("x"));
+			function addDocLateWidget(type){
+				var $wg = $(getDocLateWidgetHTML(type));
+				var $text_target = (type=="text") ? $wg.find(".text") :  $wg.find("input");
 				$("body").append($wg);
-				$wg.find("button").click(function(){
+				
+				$wg.find("[data-role='remove']").click(function(){
 					$wg.remove();
-				})
-				$wg.draggable();
+				});
+				
+				$wg.find("[data-role='c+']").click(function(){
+					var currentSize = parseInt($text_target.css("fontSize"));
+					var newSize = currentSize+1;
+					$text_target.css("fontSize",newSize);
+				});
+				
+				$wg.find("[data-role='c-']").click(function(){
+					var currentSize = parseInt($text_target.css("fontSize"));
+					var newSize = currentSize-1;
+					$text_target.css("fontSize",newSize);
+				});
+				
+				$wg.find("[data-role='l+']").click(function(){
+					var currentSize = parseInt($text_target.css("line-height"));
+					var newSize = currentSize+1+"px";
+					$text_target.css("line-height",newSize);
+				});
+				
+				$wg.find("[data-role='l-']").click(function(){
+					var currentSize = parseInt($text_target.css("line-height"));
+					var newSize = currentSize-1+"px";
+					$text_target.css("line-height",newSize);
+				});
+				
+				
+				$wg.find("[data-role='s+']").click(function(){
+					var currentSize = parseInt( ($text_target.css("letter-spacing") == "normal") ? 0 : $text_target.css("letter-spacing") );
+					var newSize = currentSize+1+"px";
+					$text_target.css("letter-spacing",newSize);		
+					$text_target.css("padding-left",newSize);
+				});
+				
+				$wg.find("[data-role='s-']").click(function(){
+					var currentSize = parseInt($text_target.css("letter-spacing"));
+					var newSize = currentSize-1+"px";
+					$text_target.css("letter-spacing",newSize);
+					$text_target.css("padding-left",newSize);
+				});
+				
+				
+				if(type == "text"){
+					$wg.resizable();
+					$wg.draggable({handle:".dragg_handle"});
+				}
+				else{
+					if(type == "x"){
+						$wg.draggable();
+					}
+					else{
+						if(type == "date"){
+							$wg.resizable();
+							$wg.draggable({handle:".dragg_handle"});
+							$wg.find("input").datepicker();
+						}
+					}
+				}
+				
+				
 			}
 		})
 		

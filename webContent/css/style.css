@@ -1,29 +1,93 @@
-
-	img{
-		position:absolute;
+	.body{
+		background-color:white;
+	}
+	
+	.menu{
+		position:fixed;
+		width:100%;
+		background-color:rgba(0,0,0,0.8);
+		height:36px;
+		top:0px;
+		left:0px;
 	}
 
-
 	.docLet-widget{
-		width:25px;
-		height:100px;
 		cursor:pointer;
 		position:absolute;
 		z-index: 100000
 	}
-	.docLet-widget button{
-		display:none;
-		margin:2px;
-	}
-
+	
 	.docLet-widget:hover{
 		background-color:rgba(0,0,0,0.3)
 	}
 	
-	.docLet-widget:hover button{
+	.docLet-widget:hover button,.docLet-widget:hover .dragg_handle{
 		display:block;
 	}
 	
+	.docLet-widget button{
+		display:none;
+		margin:2px;
+	}
+	
+	.docLet-widget .dragg_handle{
+		clear: both;
+		display:none;
+		width:100%;
+		background-color:#666;
+		text-align:center;
+		padding:3px 0px;
+		font-family:Helvetica;
+		color:#fff;
+		position:absolute;
+		bottom:0px
+	}
+	
+	.docLet-widget.x{
+		width:25px;
+		height:100px;
+	}
+	
+	
+	.docLet-widget.text{
+		min-width:200px;
+		min-height:80px;
+		top:60px;
+		left:40px;
+	}
+	
+	
+	.docLet-widget.text .text{
+		border:dotted 2px rgba(255,0,0,0.4);
+		background:transparent;
+		margin-bottom:5px;
+		height:80%;
+		font-family:Helvetica;
+		overflow:hidden;
+		line-height: 17px;
+		letter-spacing: 0px;
+	}
+	
+	
+	
+	.docLet-widget.text > span{
+		position:absolute;
+		bottom:24px
+	}
+	
+
+	
+
+	.docLet-widget.text input{
+		border:dotted 2px rgba(255,0,0,0.4);
+		background:transparent;
+		margin-bottom:5px;
+		font-family:Helvetica;
+		overflow:hidden;
+		line-height: 17px;
+		letter-spacing: 0px;
+		font-size:15px
+	}
 	
 	
 	
@@ -39,5 +103,9 @@
 @media print{
 	.menu{
 		display:none
+	}
+	
+	.docLet-widget.text .text{
+		border:none;
 	}
 }

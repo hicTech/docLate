@@ -25,7 +25,7 @@ input[type='checkbox'],input[type='radio']{
 	-webkit-margin-start: 0;
 	-webkit-margin-end: 3px;
 	border-radius: 3px;
-	border: 1px dotted #A0A0A0;
+	border:dotted 2px rgba(255,0,0,0.4);
 	display: inline-block;
 	height: 24px;
 	margin-bottom: 0;
