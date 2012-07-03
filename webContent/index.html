@@ -77,11 +77,13 @@
 						var id = wg.attr("id");
 						var type = wg.attr("data-widgetType");
 						var value = getDocLateWidgetValue(wg,type);
+						var wg_name = getDocLateWidgetName(wg);
 						if(type=="x"){
 							json.push({
 								"id" : id,
 								"type" : type,
 								"value" : value,
+								"name" : wg_name, 
 								"position" : pos
 							});
 						}
@@ -91,6 +93,7 @@
 									"id" : id,
 									"type" : type,
 									"value" : value,
+									"name" : wg_name,
 									"line-height" : wg.find(".text").css("line-height"),
 									"font-size" : wg.find(".text").css("font-size"),
 									"letter-spacing" : wg.find(".text").css("letter-spacing"),
@@ -178,6 +181,10 @@
 						}
 					}
 				}
+			}
+			
+			function getDocLateWidgetName(wg){
+				return wg.find("input.widgetName").val()
 			}
 			
 			function setDocLateWidgetPosition(wg,position){
