@@ -20,20 +20,19 @@ textarea{
 
 
 input[type='checkbox'],input[type='radio']{
-	
 	-webkit-appearance: none;
 	-webkit-margin-start: 0;
 	-webkit-margin-end: 3px;
 	border-radius: 3px;
-	border:dotted 2px rgba(255,0,0,0.4);
+	border: solid 5px rgba(255, 0, 0, 0.4);
 	display: inline-block;
-	height: 24px;
+	height: 31px;
 	margin-bottom: 0;
 	margin-top: -3px;
 	position: relative;
 	top: 3px;
 	vertical-align: baseline;
-	width: 25px;
+	width: 33px;
 }
 
 input[type="checkbox"]:checked::before,input[type="radio"]:checked::before {

@@ -4,9 +4,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>docLate</title>
 		<link type='text/css' rel='stylesheet' href="lib/jqueryUI/css/smoothness/jquery-ui-1.8.17.custom.css">
-		<link type='text/css' rel='stylesheet' href="css/style.css">
 		<link type='text/css' rel='stylesheet' href="css/form/form.css">
 		<link type='text/css' rel='stylesheet' href="css/button/button.css">
+		<link type='text/css' rel='stylesheet' href="css/style.css">
 		<script type="text/javascript" src="lib/underscore/underscore.js"></script>
 		<script type="text/javascript" src="lib/underscore/_plus.js"></script>
 		<script type="text/javascript" src="lib/jquery/jquery-v1.7.1.js"></script>
@@ -19,11 +19,11 @@
 	<body>
 		
 		<div class="menu">
-			<button class="BUTTON medium" data-role="addText">Aggiungi campo testo</button>
-			<button class="BUTTON medium" data-role="addDate">Aggiungi campo data</button>
-			<button class="BUTTON medium" data-role="addx">Aggiungi campo croce</button>
+			<button class="BUTTON medium" data-role="addText">Testo</button>
+			<button class="BUTTON medium" data-role="addDate">Data</button>
+			<button class="BUTTON medium" data-role="addx">Check</button>
 			<button class="BUTTON green medium" data-role="getJson">getJson</button>
-			<button class="BUTTON blue medium" data-role="dragg">Attiva/Disattiva drag</button>
+			<button class="BUTTON red medium" data-role="removeAll">Rimouvi tutto</button>
 		</div>
 		
 		<img src="papers/f24.png" style="margin:0px;width:1000px;position: relative:top:0px; left:0px;z-index:10"/>
@@ -51,6 +51,13 @@
 				addDocLateWidget("date");
 			});
 			
+			$("[data-role='removeAll']").click(function(){
+				if(confirm("Vuoi eliminare tutto?")){
+					$(".docLet-widget").remove();
+				}
+			});
+			
+			
 			$("[data-role='getJson']").click(function(){
 				alert(_.toString(getJsonWidgets()));
 			});
@@ -65,35 +72,34 @@
 			function getJsonWidgets(){
 				var json = new Array();
 				$(".docLet-widget").each(function(){
-					var wg = $(this);
-					var pos = getDocLateWidgetPosition(wg);
-					var id = wg.attr("id");
-					var type = wg.attr("data-widgetType");
-					var value = getDocLateWidgetValue(wg,type);
-					if(type=="x"){
-						json.push({
-							"id" : id,
-							"type" : type,
-							"value" : value,
-							"position" : pos
-						});
-					}
-					else{
-						if(type=="text"){
+					if($(this).css("position") == "absolute"){
+						var wg = $(this);
+						var pos = getDocLateWidgetPosition(wg);
+						var id = wg.attr("id");
+						var type = wg.attr("data-widgetType");
+						var value = getDocLateWidgetValue(wg,type);
+						if(type=="x"){
 							json.push({
 								"id" : id,
 								"type" : type,
 								"value" : value,
-								"line-height" : wg.find(".text").css("line-height"),
-								"font-size" : wg.find(".text").css("font-size"),
-								"letter-spacing" : wg.find(".text").css("letter-spacing"),
-								"value" : value,
 								"position" : pos
 							});
 						}
+						else{
+							if(type=="text" || type=="date"){
+								json.push({
+									"id" : id,
+									"type" : type,
+									"value" : value,
+									"line-height" : wg.find(".text").css("line-height"),
+									"font-size" : wg.find(".text").css("font-size"),
+									"letter-spacing" : wg.find(".text").css("letter-spacing"),
+									"position" : pos
+								});
+							}
+						}
 					}
-					
-					
 				})
 				return json;
 			}
@@ -102,10 +108,9 @@
 			function getDocLateWidgetHTML(type){
 				var id = _.id("wg_");
 				if(type == "x"){
-					return '<div class="docLet-widget x" id="'+id+'" data-widgetType="x" style="top:40px;left:320px">'+
+					return '<div class="docLet-widget x" id="'+id+'" data-widgetType="x">'+
 								'<input type="checkbox" id="hand"></input>'+
-								'<div style="position:absolute;bottom:0px">'+
-								'<button class="BUTTON red little" data-role="remove">X</button></div>'+
+								'<div style="position:absolute;bottom:0px;left:4px"><button class="BUTTON red little" data-role="remove"> X </button></div>'+
 							'</div>';
 				}
 				else{
@@ -124,7 +129,7 @@
 					}else{
 						if(type=="date"){
 							return '<div class="docLet-widget text date" id="'+id+'" data-widgetType="date">'+
-										'<div><input></div>'+
+										'<div><input value="01/01/2012"></div>'+
 										'<span ><button class="BUTTON red little" data-role="remove">X</button></span>'+
 										'<span style="left:30px"><button class="BUTTON little" data-role="c+">Ch+</button></span>'+
 										'<span style="left:60px"><button class="BUTTON little" data-role="c-">Ch-</button></span>'+
@@ -151,6 +156,11 @@
 					if(type == "text"){
 						return escape(wg.find(".text").html());
 					}
+					else{
+						if(type == "date"){
+							return _.date(wg.find("input").val()).getTime();
+						}
+					}
 				}
 			}
 			
@@ -161,6 +171,7 @@
 			
 			
 			function addDocLateWidget(type){
+				emptyParkingZone();
 				var $wg = $(getDocLateWidgetHTML(type));
 				var $text_target = (type=="text") ? $wg.find(".text") :  $wg.find("input");
 				$("body").append($wg);
@@ -211,22 +222,46 @@
 				
 				if(type == "text"){
 					$wg.resizable();
-					$wg.draggable({handle:".dragg_handle"});
+					advancedDragg($wg);
 				}
 				else{
 					if(type == "x"){
-						$wg.draggable();
+						advancedDragg($wg);
 					}
 					else{
 						if(type == "date"){
-							$wg.resizable();
-							$wg.draggable({handle:".dragg_handle"});
+							advancedDragg($wg);
 							$wg.find("input").datepicker();
 						}
 					}
 				}
 				
 				
+			}
+			
+			function advancedDragg($wg){
+				$wg.draggable({
+					handle:".dragg_handle",
+					stop:function(){
+						if($wg.css("position") == "fixed"){
+							var real_top = parseInt($wg.css("top")) + parseInt( $(window).scrollTop() );
+							var real_left = parseInt($wg.css("left")) + parseInt( $(window).scrollLeft() );
+							$wg.css({
+								"position":"absolute",
+								"top" : real_top,
+								"left": real_left
+								});
+							}
+						}
+				});
+			}
+			
+			function emptyParkingZone(){
+				$(".docLet-widget").each(function(){
+					if($(this).css("position") == "fixed"){
+						$(this).remove();
+					}
+				});
 			}
 		})
 		
