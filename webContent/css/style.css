@@ -9,21 +9,31 @@
 		height:36px;
 		top:0px;
 		left:0px;
-		padding:0px 0px 0px 310px;
+		padding:0px 0px 0px 340px;
 		box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.1);
 	}
 
 	.docLet-widget{
 		cursor:pointer;
 		position:absolute;
-		z-index: 100000
+		z-index: 10000
 	}
+
 	
 	.docLet-widget:hover{
-		background-color:rgba(0,0,0,0.3)
+		background-color:rgba(0,0,0,0.65);
+		box-shadow: 0px 0px 15px rgba(0,0,0,0.5)
 	}
 	
-	.docLet-widget:hover button,.docLet-widget:hover .dragg_handle{
+	.docLet-widget:hover .text{
+		color:#fff;
+	}
+	
+	.docLet-widget:hover input{
+		color:#fff;
+	}
+	
+	.docLet-widget:hover button,.docLet-widget:hover .dragg_handle,.docLet-widget:hover input.widgetName{
 		display:block;
 	}
 	
@@ -45,26 +55,22 @@
 		bottom:0px
 	}
 	
-	.docLet-widget.x{
-		width:33px;
-		height:100px;
-		position:fixed;
-		top:2px;
-		left:2px
-	}
-	
 	
 	.docLet-widget.text{
-		width:290px;
-		min-width:100px;
+		width:330px;
+		min-width:160px;
 		min-height:80px;
 		position:fixed;
 		top: 5px;
 		left: 5px;
 	}
 	
+	.docLet-widget.text.x{
+		width:120px;
+	}
 	
-	.docLet-widget.text .text{
+	
+	.docLet-widget.text .text, .docLet-widget.text.date .dateInput{
 		border:solid 5px rgba(255,0,0,0.4);
 		background:transparent;
 		margin-bottom:5px;
@@ -84,23 +90,13 @@
 	
 
 	.docLet-widget.text.date{
-		width:210px;
+		width:330px;
 		top: 2px;
 		left: 2px;
 	}
-
-	.docLet-widget.text.date input{
-		border:solid 5px rgba(255,0,0,0.4);
-		background:transparent;
-		margin-bottom:5px;
-		font-family:Helvetica;
-		overflow:hidden;
-		line-height: 17px;
-		letter-spacing: 0px;
-		font-size:15px;
-		width:198px
-	}
 	
+	
+
 	
 	
 	
@@ -115,8 +111,185 @@
 	
 	
 	
+	/* LOCKED */
+	
+	.docLet-widget-locked{
+		cursor:pointer;
+		position:absolute;
+		z-index: 10000
+	}
+
+	
+	.docLet-widget-locked:hover{
+		
+	}
+	
+	.docLet-widget-locked button{
+		display:none;
+		margin:2px;
+	}
+	
+	.docLet-widget-locked .dragg_handle{
+		display:none;
+	}
+	
+	.docLet-widget-locked.x{
+		width:33px;
+		height:100px;
+		position:fixed;
+		top:2px;
+		left:2px
+	}
 	
 	
+	.docLet-widget-locked.text{
+		width:330px;
+		position:fixed;
+		top: 5px;
+		left: 5px;
+	}
+	
+	
+	
+	
+	
+	.docLet-widget-locked .text{
+		border:solid 5px rgba(255,0,0,0.2);
+		background:transparent;
+		margin-bottom:5px;
+		height:80%;
+		font-family:Helvetica;
+		overflow:hidden;
+		line-height: 17px;
+		letter-spacing: 0px;
+	}
+	
+	.docLet-widget-locked.x input{
+		border:solid 5px rgba(255,0,0,0.2);
+		background:transparent;
+		margin-bottom:5px;
+		font-family:Helvetica;
+		overflow:hidden;
+		line-height: 17px;
+		letter-spacing: 0px;
+	}
+	
+	.docLet-widget-locked .text:hover, .docLet-widget-locked.x input:hover{
+		border:solid 5px rgba(255,0,0,0.5);
+		cursor:pointer
+	}
+	
+	.docLet-widget-locked.text.date input{
+		border:solid 5px rgba(255,0,0,0.2);
+		background:transparent;
+		margin-bottom:5px;
+		font-family:Helvetica;
+		overflow:hidden;
+		line-height: 17px;
+		letter-spacing: 0px;
+		font-size:15px;
+		width:198px
+	}
+	
+	.docLet-widget-locked.text.date input:hover{
+		border:solid 5px rgba(255,0,0,0.5);
+		cursor:pointer
+
+	}
+	
+	
+	
+	
+	
+	/* FORM INPUT ETC*/
+	
+	
+	
+	.docLate-textarea{
+		background: #F6F6F6;
+		color: #666;
+		font-size: 13px;
+		padding: 7px 14px;
+		border: 1px solid #B9B9B9;
+		border-top-color: #A4A4A4;
+		-moz-box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+		-ms-box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+		-o-box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+		-webkit-box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+		box-shadow: 0 1px 0 #fff,inset 0 1px 1px rgba(0,0,0,.17);
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		width: 235px;
+	}
+	
+	
+	
+	.docLate-checkbox{
+		-webkit-appearance: none;
+		-webkit-margin-start: 0;
+		-webkit-margin-end: 3px;
+		border-radius: 3px;
+		border: solid 5px rgba(255, 0, 0, 0.4);
+		display: inline-block;
+		height: 31px;
+		margin-bottom: 0;
+		margin-top: -3px;
+		position: relative;
+		top: 3px;
+		vertical-align: baseline;
+		width: 33px;
+	}
+	
+	
+	input[type='checkbox'].docLate-checkbox:checked::before{
+		color: gray;
+		content: url('img/checkmark.jpg');
+		font-size: 13px;
+		height: 16px;
+		left: 2px;
+		position: absolute;
+		top:3px;
+		left:3px
+	}
+	
+	
+	
+	input:focus,
+	textarea:focus{
+		background: #fff;
+	
+	}
+	
+	
+	
+	
+	.FORM-field-row.little p .INPUT-typeDate{
+		font-size: 11px;
+		padding: 4px 4px 4px 8px;
+	
+	}
+	
+	
+	.INPUT-typeDate{
+		background-image: url(img/little_date_icon.png);
+		background-repeat: no-repeat;
+		width: 100px;
+		background-position: right;
+		padding: 4px 4px 4px 12px;
+	}
+	
+
+	input.widgetName{
+		width:180px;
+		display:none;
+		color:#000;
+		background-color:#666;
+		height:17px
+	}
+
+
+	/* PRINTER CSS */
 	
 	
 	
@@ -125,15 +298,33 @@
 		display:none
 	}
 	
-	.docLet-widget.text .text,.docLet-widget.text.date input{
-		border:solid 5px rgba(0,0,0,0);
-	}
-	
-	input[type='checkbox'],input[type='radio']{
-		border:solid 5px rgba(0,0,0,0);
-	}
-	
 	.ui-resizable-se{
 		display:none
+	}
+	
+
+	
+	.docLet-widget.text .text{
+		border: solid 5px rgba(255, 0, 0, 0);
+	}
+	
+	.docLet-widget-locked.text .text{
+		border: solid 5px rgba(255, 0, 0, 0);
+	}
+	
+	.docLet-widget.text.date .dateInput{
+		border: solid 5px rgba(255, 0, 0, 0);
+	}
+	
+	.docLet-widget-locked.text.date .dateInput{
+		border: solid 5px rgba(255, 0, 0, 0);
+	}
+	
+	.docLate-checkbox{
+		border: solid 5px rgba(255, 0, 0, 0);
+	}
+	
+	.docLet-widget-locked.x input{
+		border: solid 5px rgba(255, 0, 0, 0);
 	}
 }

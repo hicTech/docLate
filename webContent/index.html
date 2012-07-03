@@ -4,7 +4,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>docLate</title>
 		<link type='text/css' rel='stylesheet' href="lib/jqueryUI/css/smoothness/jquery-ui-1.8.17.custom.css">
-		<link type='text/css' rel='stylesheet' href="css/form/form.css">
 		<link type='text/css' rel='stylesheet' href="css/button/button.css">
 		<link type='text/css' rel='stylesheet' href="css/style.css">
 		<script type="text/javascript" src="lib/underscore/underscore.js"></script>
@@ -53,7 +52,7 @@
 			
 			$("[data-role='removeAll']").click(function(){
 				if(confirm("Vuoi eliminare tutto?")){
-					$(".docLet-widget").remove();
+					$(".docLet-widget,.docLet-widget-locked").remove();
 				}
 			});
 			
@@ -71,7 +70,7 @@
 			
 			function getJsonWidgets(){
 				var json = new Array();
-				$(".docLet-widget").each(function(){
+				$(".docLet-widget,.docLet-widget-locked").each(function(){
 					if($(this).css("position") == "absolute"){
 						var wg = $(this);
 						var pos = getDocLateWidgetPosition(wg);
@@ -108,9 +107,13 @@
 			function getDocLateWidgetHTML(type){
 				var id = _.id("wg_");
 				if(type == "x"){
-					return '<div class="docLet-widget x" id="'+id+'" data-widgetType="x">'+
-								'<input type="checkbox" id="hand"></input>'+
-								'<span ><button class="BUTTON red little" data-role="remove" style="position:absolute; bottom:24px">X</button></span>'+
+					return '<div class="docLet-widget text x" id="'+id+'" data-widgetType="x">'+
+								'<span style="left:0px;top:-23px;"><button class="BUTTON red little" data-role="remove">X</button></span>'+
+								'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" style="width:80px" placeholder="name"></span>'+
+								'<span style="right:0px;top:-23px"><button class="BUTTON little green" data-role="lock">lock</button></span>'+
+								
+								'<input type="checkbox" class="docLate-checkbox" data-type="checkbox" style="margin:0px 0px 0px 65px"></input>'+
+								
 								'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 							'</div>';
 				}
@@ -118,24 +121,38 @@
 					if(type=="text"){
 						return '<div class="docLet-widget text" id="'+id+'" data-widgetType="text">'+
 									'<div class="text" contentEditable="true">Scrivi testo</div>'+
-									'<span ><button class="BUTTON red little" data-role="remove">X</button></span>'+
-									'<span style="left:30px"><button class="BUTTON little" data-role="c+">T+</button></span>'+
-									'<span style="left:57px"><button class="BUTTON little" data-role="c-">t-</button></span>'+
-									'<span style="left:90px"><button class="BUTTON little" data-role="l+">line+</button></span>'+
-									'<span style="left:130px"><button class="BUTTON little" data-role="l-">line-</button></span>'+
-									'<span style="left:180px"><button class="BUTTON little" data-role="s+">space+</button></span>'+
-									'<span style="left:227px"><button class="BUTTON little" data-role="s-">space-</button></span>'+
+									
+									'<span style="left:0px;top:-23px"><button class="BUTTON red little" data-role="remove">X</button></span>'+
+									'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name"></span>'+
+									'<span style="right:0px;top:-23px"><button class="BUTTON little green" data-role="lock">lock</button></span>'+
+									
+									'<span style="bottom:-22px;left:0px"><button class="BUTTON little" data-role="c+">T+</button></span>'+
+									'<span style="bottom:-22px;left:27px"><button class="BUTTON little" data-role="c-">t-</button></span>'+
+									
+									'<span style="bottom:-22px;right:0px"><button class="BUTTON little" data-role="l+">&#8595;</button></span>'+
+									'<span style="bottom:-22px;right:20px"><button class="BUTTON little" data-role="l-">&#8593;</button></span>'+
+									
+									'<span style="bottom:-22px;right:50px"><button class="BUTTON little" data-role="s+">&#8594;</button></span>'+
+									'<span style="bottom:-22px;right:70px"><button class="BUTTON little" data-role="s-">&#8592;</button></span>'+
+									
 									'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 								'</div>';
 					}else{
 						if(type=="date"){
 							return '<div class="docLet-widget text date" id="'+id+'" data-widgetType="date">'+
-										'<div><input value="01/01/2012"></div>'+
-										'<span ><button class="BUTTON red little" data-role="remove">X</button></span>'+
-										'<span style="left:30px"><button class="BUTTON little" data-role="c+">T+</button></span>'+
-										'<span style="left:57px"><button class="BUTTON little" data-role="c-">t-</button></span>'+
-										'<span style="left:110px"><button class="BUTTON little" data-role="s+">space+</button></span>'+
-										'<span style="left:157px"><button class="BUTTON little" data-role="s-">space-</button></span>'+
+							
+										'<span style="left:0px;top:-23px"><button class="BUTTON red little" data-role="remove">X</button></span>'+
+										'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name"></span>'+
+										'<span style="right:0px;top:-23px"><button class="BUTTON little green" data-role="lock">lock</button></span>'+
+										
+										'<div><input data-type="date" class="dateInput" value="01/01/2012" style="font-size:17px"></div>'+
+										
+										'<span style="bottom:-22px;left:0px"><button class="BUTTON little" data-role="c+">T+</button></span>'+
+										'<span style="bottom:-22px;left:27px"><button class="BUTTON little" data-role="c-">t-</button></span>'+
+										
+										'<span style="bottom:-22px;right:0px"><button class="BUTTON little" data-role="s+">&#8594;</button></span>'+
+										'<span style="bottom:-22px;right:20px"><button class="BUTTON little" data-role="s-">&#8592;</button></span>'+
+										
 										'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 									'</div>';
 						}
@@ -218,6 +235,10 @@
 					$text_target.css("padding-left",newSize);
 				});
 				
+				$wg.find("[data-role='lock']").click(function(){
+					lockWidget($wg,type);
+				});
+				
 				
 				if(type == "text"){
 					$wg.resizable();
@@ -230,10 +251,21 @@
 					else{
 						if(type == "date"){
 							advancedDragg($wg);
-							$wg.find("input").datepicker();
+							$wg.resizable();
+							$wg.find("input.dateInput").datepicker();
 						}
 					}
 				}
+				
+				$wg.hover(
+					function(){
+						$(".docLet-widget,.docLet-widget-locked").css("z-index","10000");
+						$wg.css("z-index","10010");
+					},
+					function(){
+						$(".docLet-widget").css("z-index","10000");
+					}
+				);
 				
 				
 			}
@@ -261,6 +293,32 @@
 						$(this).remove();
 					}
 				});
+			}
+			
+			
+			function lockWidget($wg){
+				
+				$wg.addClass("docLet-widget-locked");
+				$wg.removeClass("docLet-widget");
+				$wg.resizable( "destroy" );
+				$wg.find("[contentEditable]").attr("contentEditable",false);
+				$wg.find("[data-type='date']").datepicker("destroy");
+				$wg.find("input").attr("readonly",true);
+				$wg.find(".text").click(function(){
+					unlockWidget($wg);
+				});
+				$wg.find("input").click(function(){
+					unlockWidget($wg);
+				});
+			}
+			
+			function unlockWidget($wg){
+				$wg.removeClass("docLet-widget-locked");
+				$wg.addClass("docLet-widget");
+				$wg.resizable();
+				$wg.find("[data-type='date']").datepicker();
+				$wg.find("input").attr("readonly",false);
+				$wg.find("[contentEditable]").attr("contentEditable",true);
 			}
 		})
 		
