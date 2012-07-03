@@ -110,7 +110,8 @@
 				if(type == "x"){
 					return '<div class="docLet-widget x" id="'+id+'" data-widgetType="x">'+
 								'<input type="checkbox" id="hand"></input>'+
-								'<div style="position:absolute;bottom:0px;left:4px"><button class="BUTTON red little" data-role="remove"> X </button></div>'+
+								'<span ><button class="BUTTON red little" data-role="remove" style="position:absolute; bottom:24px">X</button></span>'+
+								'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 							'</div>';
 				}
 				else{
@@ -118,26 +119,24 @@
 						return '<div class="docLet-widget text" id="'+id+'" data-widgetType="text">'+
 									'<div class="text" contentEditable="true">Scrivi testo</div>'+
 									'<span ><button class="BUTTON red little" data-role="remove">X</button></span>'+
-									'<span style="left:30px"><button class="BUTTON little" data-role="c+">Ch+</button></span>'+
-									'<span style="left:60px"><button class="BUTTON little" data-role="c-">Ch-</button></span>'+
-									'<span style="left:90px"><button class="BUTTON little" data-role="l+">L+</button></span>'+
-									'<span style="left:110px"><button class="BUTTON little" data-role="l-">L-</button></span>'+
-									'<span style="left:140px"><button class="BUTTON little" data-role="s+">S+</button></span>'+
-									'<span style="left:165px"><button class="BUTTON little" data-role="s-">S-</button></span>'+
-									'<div class="dragg_handle">dragg</div>'+
+									'<span style="left:30px"><button class="BUTTON little" data-role="c+">T+</button></span>'+
+									'<span style="left:57px"><button class="BUTTON little" data-role="c-">t-</button></span>'+
+									'<span style="left:90px"><button class="BUTTON little" data-role="l+">line+</button></span>'+
+									'<span style="left:130px"><button class="BUTTON little" data-role="l-">line-</button></span>'+
+									'<span style="left:180px"><button class="BUTTON little" data-role="s+">space+</button></span>'+
+									'<span style="left:227px"><button class="BUTTON little" data-role="s-">space-</button></span>'+
+									'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 								'</div>';
 					}else{
 						if(type=="date"){
 							return '<div class="docLet-widget text date" id="'+id+'" data-widgetType="date">'+
 										'<div><input value="01/01/2012"></div>'+
 										'<span ><button class="BUTTON red little" data-role="remove">X</button></span>'+
-										'<span style="left:30px"><button class="BUTTON little" data-role="c+">Ch+</button></span>'+
-										'<span style="left:60px"><button class="BUTTON little" data-role="c-">Ch-</button></span>'+
-										'<span style="left:90px"><button class="BUTTON little" data-role="l+">L+</button></span>'+
-										'<span style="left:110px"><button class="BUTTON little" data-role="l-">L-</button></span>'+
-										'<span style="left:140px"><button class="BUTTON little" data-role="s+">S+</button></span>'+
-										'<span style="left:165px"><button class="BUTTON little" data-role="s-">S-</button></span>'+
-										'<div class="dragg_handle">dragg</div>'+
+										'<span style="left:30px"><button class="BUTTON little" data-role="c+">T+</button></span>'+
+										'<span style="left:57px"><button class="BUTTON little" data-role="c-">t-</button></span>'+
+										'<span style="left:110px"><button class="BUTTON little" data-role="s+">space+</button></span>'+
+										'<span style="left:157px"><button class="BUTTON little" data-role="s-">space-</button></span>'+
+										'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 									'</div>';
 						}
 					}
