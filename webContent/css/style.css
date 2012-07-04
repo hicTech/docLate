@@ -289,6 +289,23 @@
 	}
 
 
+
+	/* BARCODE */
+	
+	.docLet-widget.text.barcode{
+		height:150px
+	}
+	
+	.docLet-widget.text.barcode .text ,.docLet-widget-locked.text.barcode .text{
+		margin:0px auto;
+		width:190px;
+		text-align:center
+	}
+
+
+
+
+
 	/* PRINTER CSS */
 	
 	

@@ -21,6 +21,7 @@
 			<button class="BUTTON medium" data-role="addText">Testo</button>
 			<button class="BUTTON medium" data-role="addDate">Data</button>
 			<button class="BUTTON medium" data-role="addx">Check</button>
+			<button class="BUTTON medium" data-role="barcode">Barcode</button>
 			<button class="BUTTON green medium" data-role="getJson">getJson</button>
 			<button class="BUTTON red medium" data-role="removeAll">Rimouvi tutto</button>
 		</div>
@@ -48,6 +49,10 @@
 			
 			$("[data-role='addDate']").click(function(){
 				addDocLateWidget("date");
+			});
+			
+			$("[data-role='barcode']").click(function(){
+				addDocLateWidget("barcode");
 			});
 			
 			$("[data-role='removeAll']").click(function(){
@@ -78,7 +83,7 @@
 						var type = wg.attr("data-widgetType");
 						var value = getDocLateWidgetValue(wg,type);
 						var wg_name = getDocLateWidgetName(wg);
-						if(type=="x"){
+						if(type=="x" || type == "barcode"){
 							json.push({
 								"id" : id,
 								"type" : type,
@@ -94,10 +99,10 @@
 									"type" : type,
 									"value" : value,
 									"name" : wg_name,
+									"position" : pos,
 									"line-height" : wg.find(".text").css("line-height"),
 									"font-size" : wg.find(".text").css("font-size"),
 									"letter-spacing" : wg.find(".text").css("letter-spacing"),
-									"position" : pos
 								});
 							}
 						}
@@ -140,7 +145,9 @@
 									
 									'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 								'</div>';
-					}else{
+							
+					}
+					else{
 						if(type=="date"){
 							return '<div class="docLet-widget text date" id="'+id+'" data-widgetType="date">'+
 							
@@ -158,6 +165,19 @@
 										
 										'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 									'</div>';
+						}
+						else{
+							if(type=="barcode"){
+								return '<div class="docLet-widget text barcode" id="'+id+'" data-widgetType="barcode">'+
+											'<div class="text" contentEditable="true" style="font-size:13px"><img src="css/img/bar-code.png" style="float:left" /><div style="clear:both">Scrivi testo</div></div>'+
+											
+											'<span style="left:0px;top:-23px"><button class="BUTTON red little" data-role="remove">X</button></span>'+
+											'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name"></span>'+
+											'<span style="right:0px;top:-23px"><button class="BUTTON little green" data-role="lock">lock</button></span>'+
+											
+											'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
+										'</div>';
+							}
 						}
 					}
 				}
@@ -178,6 +198,11 @@
 					else{
 						if(type == "date"){
 							return _.date(wg.find("input").val()).getTime();
+						}
+						else{
+							if(type == "barcode"){
+								return wg.find(".text > div").html();
+							}
 						}
 					}
 				}
@@ -252,7 +277,7 @@
 					advancedDragg($wg);
 				}
 				else{
-					if(type == "x"){
+					if(type == "x" || type == "barcode"){
 						advancedDragg($wg);
 					}
 					else{
@@ -303,8 +328,7 @@
 			}
 			
 			
-			function lockWidget($wg){
-				
+			function lockWidget($wg){			
 				$wg.addClass("docLet-widget-locked");
 				$wg.removeClass("docLet-widget");
 				$wg.resizable( "destroy" );
