@@ -63,7 +63,8 @@
 			
 			
 			$("[data-role='getJson']").click(function(){
-				alert(_.toString(getJsonWidgets()));
+				if(getJsonWidgets() != null)
+					alert(_.toString(getJsonWidgets()));
 			});
 			
 			
@@ -108,7 +109,10 @@
 						}
 					}
 				})
-				return json;
+				if( validate(json) ){
+					return json;
+				}
+				return null;
 			}
 			
 			
@@ -169,7 +173,7 @@
 						else{
 							if(type=="barcode"){
 								return '<div class="docLet-widget text barcode" id="'+id+'" data-widgetType="barcode">'+
-											'<div class="text" contentEditable="true" style="font-size:13px"><img src="css/img/bar-code.png" style="float:left" /><div style="clear:both">Scrivi testo</div></div>'+
+											'<div class="text" style="font-size:13px"><img src="css/img/bar-code.png" style="float:left" /><div style="clear:both" contentEditable="true" >Scrivi testo</div></div>'+
 											
 											'<span style="left:0px;top:-23px"><button class="BUTTON red little" data-role="remove">X</button></span>'+
 											'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name"></span>'+
@@ -350,6 +354,24 @@
 				$wg.find("[data-type='date']").datepicker();
 				$wg.find("input").attr("readonly",false);
 				$wg.find("[contentEditable]").attr("contentEditable",true);
+			}
+			
+			function validate(json){
+				var arrNames = new Array();
+				_.each(json,function(elem){
+					arrNames.push(elem.name);
+				});
+				
+				if(_.include(arrNames,"")){
+					alert("Uno o più widget sono senza nome");
+					return false;
+				}
+				if(arrNames.length != _.unique(arrNames).length){
+					alert("I widget devono avevre un nome univoco");
+					return false;
+				}
+				
+				return true;
 			}
 		})
 		
