@@ -15,7 +15,7 @@
 		
 	</head>
 	
-	<body>
+	<body style="top-margin:0px; margin-top: 0px">
 		
 		<div class="menu">
 			<button class="BUTTON medium" data-role="addText">Testo</button>
@@ -26,7 +26,8 @@
 			<button class="BUTTON red medium" data-role="removeAll">Rimouvi tutto</button>
 		</div>
 		
-		<img src="papers/f24.png" style="margin:0px;width:1000px;position: relative:top:0px; left:0px;z-index:10"/>
+		<img src="papers/f24.png" style="margin:0px;width:1000px"/>
+		<img src="papers/f24.png" style="margin:0px;width:1000px"/>
 		
 		
 		
@@ -35,6 +36,72 @@
 	</body>
 	
 	<script>
+	
+	
+		var example = [
+						  {
+						    "id": "wg_1",
+						    "type": "text",
+						    "value": "Delega",
+						    "name": "due",
+						    "position": {
+						      "top": 61,
+						      "left": 574
+						    },
+						    "line-height": "30px",
+						    "font-size": "27px",
+						    "letter-spacing": "normal"
+						  },
+						 
+						    {
+						    "id": "wg_1",
+						    "type": "date",
+						    "value": -2208992400000,
+						    "name": "we",
+						    "position": {
+						      "top": 172,
+						      "left": 145
+						    },
+						    "font-size": "19px",
+						    "letter-spacing": "3px"
+						  },
+						  
+						  {
+						    "id": "wg_3",
+						    "type": "barcode",
+						    "value": "barcode01020304",
+						    "name": "tre",
+						    "position": {
+						      "top": 383,
+						      "left": 779
+						    }
+						  },
+						  {
+						    "id": "wg_5",
+						    "type": "text",
+						    "value": "testo1%3Cdiv%3Etesto2%3C/div%3E%3Cdiv%3Etesto3%3C/div%3E%3Cdiv%3Etesto4%3C/div%3E%3Cdiv%3Etesto5%3C/div%3E",
+						    "name": "quattro",
+						    "position": {
+						      "top": 400,
+						      "left": 268
+						    },
+						    "line-height": "20px",
+						    "font-size": "16px",
+						    "letter-spacing": "normal"
+						  },
+						  {
+						    "id": "wg_4",
+						    "type": "x",
+						    "value": true,
+						    "name": "cinque",
+						    "position": {
+						      "top": 173,
+						      "left": 867
+						    }
+						  }
+						  
+						  
+						]
 		
 		$(document).ready(function(){
 
@@ -57,7 +124,7 @@
 			
 			$("[data-role='removeAll']").click(function(){
 				if(confirm("Vuoi eliminare tutto?")){
-					$(".docLet-widget,.docLet-widget-locked").remove();
+					$(".docLate-widget,.docLate-widget-locked").remove();
 				}
 			});
 			
@@ -72,11 +139,28 @@
 			
 			
 			
+			_.each(example,function(elem){
+				$("body").append(getDocLateWidgetHTML(elem));
+				
+				$(".docLate-widget").each(function(){
+					animateWidget($(this));
+				})
+			})
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			
 			function getJsonWidgets(){
 				var json = new Array();
-				$(".docLet-widget,.docLet-widget-locked").each(function(){
+				$(".docLate-widget,.docLate-widget-locked").each(function(){
 					if($(this).css("position") == "absolute"){
 						var wg = $(this);
 						var pos = getDocLateWidgetPosition(wg);
@@ -94,7 +178,7 @@
 							});
 						}
 						else{
-							if(type=="text" || type=="date"){
+							if(type=="text"){
 								json.push({
 									"id" : id,
 									"type" : type,
@@ -105,6 +189,19 @@
 									"font-size" : wg.find(".text").css("font-size"),
 									"letter-spacing" : wg.find(".text").css("letter-spacing"),
 								});
+							}
+							else{
+								if(type=="date"){
+									json.push({
+										"id" : id,
+										"type" : type,
+										"value" : value,
+										"name" : wg_name,
+										"position" : pos,
+										"font-size" : wg.find(".dateInput").css("font-size"),
+										"letter-spacing" : wg.find(".dateInput").css("letter-spacing"),
+									});
+								}
 							}
 						}
 					}
@@ -117,25 +214,52 @@
 			
 			
 			function getDocLateWidgetHTML(type){
-				var id = _.id("wg_");
+				
+				if(_.isObject(type)){
+					var obj = type;
+					var id = obj.id;
+					var type = obj.type;
+					var value = obj.value;
+					var name = obj.name;
+					var top = obj.position.top;
+					var left = obj.position.left;
+					var line_height = (_.is(obj["line-height"])) ? obj["line-height"] : "";
+					var font_size = (_.is(obj["font-size"])) ? obj["font-size"] : "";
+					var letter_spacing = (_.is(obj["letter-spacing"])) ? obj["letter-spacing"] : "";
+					var position = "absolute";
+				}
+				else{
+					var id = _.id("wg_");
+					var position = "fixed";
+					var top = 3;
+					var left = 3;
+					var name = "";
+					var value = (type == "date") ? "01/10/2012" : "Modifica questo testo";
+					var line_height = ""
+					var font_size = "";
+					var letter_spacing = "";
+				}
+				
+				
 				if(type == "x"){
-					return '<div class="docLet-widget text x" id="'+id+'" data-widgetType="x">'+
+					var checked = (value) ? "checked" : "";
+					return '<div class="docLate-widget text x" id="'+id+'" data-widgetType="x" style="position:'+position+'; top:'+top+'px; left:'+left+'px">'+
 								'<span style="left:0px;top:-23px;"><button class="BUTTON red little" data-role="remove">X</button></span>'+
-								'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" style="width:80px" placeholder="name"></span>'+
+								'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" style="width:80px" placeholder="name" value="'+name+'"></span>'+
 								'<span style="right:0px;top:-23px"><button class="BUTTON little green" data-role="lock">lock</button></span>'+
 								
-								'<input type="checkbox" class="docLate-checkbox" data-type="checkbox" style="margin:0px 0px 0px 65px"></input>'+
+								'<input type="checkbox" class="docLate-checkbox" data-type="checkbox" checked="'+checked+'" style="margin:0px 0px 0px 65px"></input>'+
 								
 								'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
 							'</div>';
 				}
 				else{
 					if(type=="text"){
-						return '<div class="docLet-widget text" id="'+id+'" data-widgetType="text">'+
-									'<div class="text" contentEditable="true">Scrivi testo</div>'+
+						return '<div class="docLate-widget text" id="'+id+'" data-widgetType="text" style="position:'+position+'; top:'+top+'px; left:'+left+'px">'+
+									'<div class="text" contentEditable="true" style="line-height:'+line_height+'; letter-spacing:'+letter_spacing+'; font-size:'+font_size+'">'+unescape(value)+'</div>'+
 									
 									'<span style="left:0px;top:-23px"><button class="BUTTON red little" data-role="remove">X</button></span>'+
-									'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name"></span>'+
+									'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name" value="'+name+'"></span>'+
 									'<span style="right:0px;top:-23px"><button class="BUTTON little green" data-role="lock">lock</button></span>'+
 									
 									'<span style="bottom:-22px;left:0px"><button class="BUTTON little" data-role="c+">T+</button></span>'+
@@ -153,13 +277,13 @@
 					}
 					else{
 						if(type=="date"){
-							return '<div class="docLet-widget text date" id="'+id+'" data-widgetType="date">'+
+							return '<div class="docLate-widget text date" id="'+id+'" data-widgetType="date" style="position:'+position+'; top:'+top+'px; left:'+left+'px">'+
 							
 										'<span style="left:0px;top:-23px"><button class="BUTTON red little" data-role="remove">X</button></span>'+
-										'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name"></span>'+
+										'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name" value="'+name+'"></span>'+
 										'<span style="right:0px;top:-23px"><button class="BUTTON little green" data-role="lock">lock</button></span>'+
 										
-										'<div><input data-type="date" class="dateInput" value="01/01/2012" style="font-size:17px"></div>'+
+										'<div><input data-type="date" class="dateInput" value="'+_.dateStr(value)+'" style="font-size:'+ font_size +'; letter-spacing:'+letter_spacing+' "></div>'+
 										
 										'<span style="bottom:-22px;left:0px"><button class="BUTTON little" data-role="c+">T+</button></span>'+
 										'<span style="bottom:-22px;left:27px"><button class="BUTTON little" data-role="c-">t-</button></span>'+
@@ -172,11 +296,11 @@
 						}
 						else{
 							if(type=="barcode"){
-								return '<div class="docLet-widget text barcode" id="'+id+'" data-widgetType="barcode">'+
-											'<div class="text" style="font-size:13px"><img src="css/img/bar-code.png" style="float:left" /><div style="clear:both" contentEditable="true" >Scrivi testo</div></div>'+
+								return '<div class="docLate-widget text barcode" id="'+id+'" data-widgetType="barcode" style="position:'+position+'; top:'+top+'px; left:'+left+'px">'+
+											'<div class="text" style="font-size:13px"><img src="css/img/bar-code.png" style="float:left" /><div style="clear:both" contentEditable="true" >'+value+'</div></div>'+
 											
 											'<span style="left:0px;top:-23px"><button class="BUTTON red little" data-role="remove">X</button></span>'+
-											'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name"></span>'+
+											'<span style="left:30px;top:-23px; height:10px"><input class="widgetName" placeholder="name" value="'+name+'"></span>'+
 											'<span style="right:0px;top:-23px"><button class="BUTTON little green" data-role="lock">lock</button></span>'+
 											
 											'<div class="dragg_handle"><div class="draggIcon"></div></div>'+
@@ -225,9 +349,13 @@
 			function addDocLateWidget(type){
 				emptyParkingZone();
 				var $wg = $(getDocLateWidgetHTML(type));
-				var $text_target = (type=="text") ? $wg.find(".text") :  $wg.find("input");
 				$("body").append($wg);
-				
+				animateWidget($wg);
+			}
+			
+			function animateWidget($wg){
+				var type = $wg.attr("data-widgetType");
+				var $text_target = (type=="text") ? $wg.find("[contentEditable]") :  $wg.find(".dateInput");
 				$wg.find("[data-role='remove']").click(function(){
 					$wg.remove();
 				});
@@ -295,15 +423,13 @@
 				
 				$wg.hover(
 					function(){
-						$(".docLet-widget,.docLet-widget-locked").css("z-index","10000");
+						$(".docLate-widget,.docLate-widget-locked").css("z-index","10000");
 						$wg.css("z-index","10010");
 					},
 					function(){
-						$(".docLet-widget").css("z-index","10000");
+						$(".docLate-widget").css("z-index","10000");
 					}
 				);
-				
-				
 			}
 			
 			function advancedDragg($wg){
@@ -324,7 +450,7 @@
 			}
 			
 			function emptyParkingZone(){
-				$(".docLet-widget").each(function(){
+				$(".docLate-widget").each(function(){
 					if($(this).css("position") == "fixed"){
 						$(this).remove();
 					}
@@ -333,8 +459,8 @@
 			
 			
 			function lockWidget($wg){			
-				$wg.addClass("docLet-widget-locked");
-				$wg.removeClass("docLet-widget");
+				$wg.addClass("docLate-widget-locked");
+				$wg.removeClass("docLate-widget");
 				$wg.resizable( "destroy" );
 				$wg.find("[contentEditable]").attr("contentEditable",false);
 				$wg.find("[data-type='date']").datepicker("destroy");
@@ -348,8 +474,8 @@
 			}
 			
 			function unlockWidget($wg){
-				$wg.removeClass("docLet-widget-locked");
-				$wg.addClass("docLet-widget");
+				$wg.removeClass("docLate-widget-locked");
+				$wg.addClass("docLate-widget");
 				$wg.resizable();
 				$wg.find("[data-type='date']").datepicker();
 				$wg.find("input").attr("readonly",false);

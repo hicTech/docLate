@@ -13,36 +13,36 @@
 		box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.1);
 	}
 
-	.docLet-widget{
+	.docLate-widget{
 		cursor:pointer;
 		position:absolute;
 		z-index: 10000
 	}
 
 	
-	.docLet-widget:hover{
+	.docLate-widget:hover{
 		background-color:rgba(0,0,0,0.65);
 		box-shadow: 0px 0px 15px rgba(0,0,0,0.5)
 	}
 	
-	.docLet-widget:hover .text{
+	.docLate-widget:hover .text{
 		color:#fff;
 	}
 	
-	.docLet-widget:hover input{
+	.docLate-widget:hover input{
 		color:#fff;
 	}
 	
-	.docLet-widget:hover button,.docLet-widget:hover .dragg_handle,.docLet-widget:hover input.widgetName{
+	.docLate-widget:hover button,.docLate-widget:hover .dragg_handle,.docLate-widget:hover input.widgetName{
 		display:block;
 	}
 	
-	.docLet-widget button{
+	.docLate-widget button{
 		display:none;
 		margin:2px;
 	}
 	
-	.docLet-widget .dragg_handle{
+	.docLate-widget .dragg_handle{
 		clear: both;
 		display:none;
 		width:100%;
@@ -56,21 +56,18 @@
 	}
 	
 	
-	.docLet-widget.text{
+	.docLate-widget.text{
 		width:330px;
 		min-width:160px;
 		min-height:80px;
-		position:fixed;
-		top: 5px;
-		left: 5px;
 	}
 	
-	.docLet-widget.text.x{
+	.docLate-widget.text.x{
 		width:120px;
 	}
 	
 	
-	.docLet-widget.text .text, .docLet-widget.text.date .dateInput{
+	.docLate-widget.text .text, .docLate-widget.text.date .dateInput{
 		border:solid 5px rgba(255,0,0,0.4);
 		background:transparent;
 		margin-bottom:5px;
@@ -83,16 +80,15 @@
 	
 	
 	
-	.docLet-widget.text > span{
+	.docLate-widget.text > span{
 		position:absolute;
 		bottom:24px
 	}
 	
 
-	.docLet-widget.text.date{
+	.docLate-widget.text.date{
 		width:330px;
-		top: 2px;
-		left: 2px;
+
 	}
 	
 	
@@ -113,47 +109,42 @@
 	
 	/* LOCKED */
 	
-	.docLet-widget-locked{
+	.docLate-widget-locked{
 		cursor:pointer;
 		position:absolute;
 		z-index: 10000
 	}
 
 	
-	.docLet-widget-locked:hover{
+	.docLate-widget-locked:hover{
 		
 	}
 	
-	.docLet-widget-locked button{
+	.docLate-widget-locked button{
 		display:none;
 		margin:2px;
 	}
 	
-	.docLet-widget-locked .dragg_handle{
+	.docLate-widget-locked .dragg_handle{
 		display:none;
 	}
 	
-	.docLet-widget-locked.x{
+	.docLate-widget-locked.x{
 		width:33px;
 		height:100px;
-		position:fixed;
-		top:2px;
-		left:2px
 	}
 	
 	
-	.docLet-widget-locked.text{
+	.docLate-widget-locked.text{
 		width:330px;
-		position:fixed;
-		top: 5px;
-		left: 5px;
+
 	}
 	
 	
 	
 	
 	
-	.docLet-widget-locked .text{
+	.docLate-widget-locked .text{
 		border:solid 5px rgba(255,0,0,0.2);
 		background:transparent;
 		margin-bottom:5px;
@@ -164,7 +155,7 @@
 		letter-spacing: 0px;
 	}
 	
-	.docLet-widget-locked.x input{
+	.docLate-widget-locked.x input{
 		border:solid 5px rgba(255,0,0,0.2);
 		background:transparent;
 		margin-bottom:5px;
@@ -174,12 +165,12 @@
 		letter-spacing: 0px;
 	}
 	
-	.docLet-widget-locked .text:hover, .docLet-widget-locked.x input:hover{
+	.docLate-widget-locked .text:hover, .docLate-widget-locked.x input:hover{
 		border:solid 5px rgba(255,0,0,0.5);
 		cursor:pointer
 	}
 	
-	.docLet-widget-locked.text.date input{
+	.docLate-widget-locked.text.date input{
 		border:solid 5px rgba(255,0,0,0.2);
 		background:transparent;
 		margin-bottom:5px;
@@ -191,7 +182,7 @@
 		width:198px
 	}
 	
-	.docLet-widget-locked.text.date input:hover{
+	.docLate-widget-locked.text.date input:hover{
 		border:solid 5px rgba(255,0,0,0.5);
 		cursor:pointer
 
@@ -249,8 +240,6 @@
 		height: 16px;
 		left: 2px;
 		position: absolute;
-		top:3px;
-		left:3px
 	}
 	
 	
@@ -292,11 +281,11 @@
 
 	/* BARCODE */
 	
-	.docLet-widget.text.barcode{
+	.docLate-widget.text.barcode{
 		height:150px
 	}
 	
-	.docLet-widget.text.barcode .text ,.docLet-widget-locked.text.barcode .text{
+	.docLate-widget.text.barcode .text ,.docLate-widget-locked.text.barcode .text{
 		margin:0px auto;
 		width:190px;
 		text-align:center
@@ -311,6 +300,10 @@
 	
 	
 @media print{
+	img{
+		width:100%;
+		margin:240px
+	}
 	.menu{
 		display:none
 	}
@@ -321,19 +314,19 @@
 	
 
 	
-	.docLet-widget.text .text{
+	.docLate-widget.text .text{
 		border: solid 5px rgba(255, 0, 0, 0);
 	}
 	
-	.docLet-widget-locked.text .text{
+	.docLate-widget-locked.text .text{
 		border: solid 5px rgba(255, 0, 0, 0);
 	}
 	
-	.docLet-widget.text.date .dateInput{
+	.docLate-widget.text.date .dateInput{
 		border: solid 5px rgba(255, 0, 0, 0);
 	}
 	
-	.docLet-widget-locked.text.date .dateInput{
+	.docLate-widget-locked.text.date .dateInput{
 		border: solid 5px rgba(255, 0, 0, 0);
 	}
 	
@@ -341,7 +334,7 @@
 		border: solid 5px rgba(255, 0, 0, 0);
 	}
 	
-	.docLet-widget-locked.x input{
+	.docLate-widget-locked.x input{
 		border: solid 5px rgba(255, 0, 0, 0);
 	}
 }
