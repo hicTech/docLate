@@ -2,6 +2,10 @@
 		background-color:white;
 	}
 	
+	.img_container img{
+		width:1000px;
+	}
+	
 	.menu{
 		position:fixed;
 		width:100%;
@@ -11,18 +15,22 @@
 		left:0px;
 		padding:0px 0px 0px 340px;
 		box-shadow: 0px 3px 10px 2px rgba(0, 0, 0, 0.1);
+		z-index:999999
 	}
 
 	.docLate-widget{
-		cursor:pointer;
 		position:absolute;
-		z-index: 10000
+		z-index: 10000;
+		border:solid 30px rgba(255,255,255,0);
+		border-radius:4px;
 	}
 
 	
 	.docLate-widget:hover{
 		background-color:rgba(0,0,0,0.65);
-		box-shadow: 0px 0px 15px rgba(0,0,0,0.5)
+		border:solid 30px rgba(255,255,255,0.75);
+		border-radius:4px;
+		box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
 	}
 	
 	.docLate-widget:hover .text{
@@ -33,7 +41,9 @@
 		color:#fff;
 	}
 	
-	.docLate-widget:hover button,.docLate-widget:hover .dragg_handle,.docLate-widget:hover input.widgetName{
+	.docLate-widget:hover button,
+	.docLate-widget:hover .dragg_handle,
+	.docLate-widget:hover input.widgetName{
 		display:block;
 	}
 	
@@ -43,16 +53,20 @@
 	}
 	
 	.docLate-widget .dragg_handle{
+		cursor: move;
 		clear: both;
 		display:none;
 		width:100%;
-		background-color:#666;
+		background-color:#333;
 		text-align:center;
 		padding:3px 0px;
 		font-family:Helvetica;
 		color:#fff;
 		position:absolute;
 		bottom:0px
+	}
+	.docLate-widget .dragg_handle{
+		background-color:#222;
 	}
 	
 	
@@ -67,7 +81,8 @@
 	}
 	
 	
-	.docLate-widget.text .text, .docLate-widget.text.date .dateInput{
+	.docLate-widget.text .text,
+	.docLate-widget.text.date .dateInput{
 		border:solid 5px rgba(255,0,0,0.4);
 		background:transparent;
 		margin-bottom:5px;
@@ -112,7 +127,9 @@
 	.docLate-widget-locked{
 		cursor:pointer;
 		position:absolute;
-		z-index: 10000
+		z-index: 10000;
+		border:solid 30px rgba(255,255,255,0);
+		border-radius:4px;
 	}
 
 	
@@ -223,13 +240,14 @@
 		border-radius: 3px;
 		border: solid 5px rgba(255, 0, 0, 0.4);
 		display: inline-block;
-		height: 31px;
+		height: 28px;
 		margin-bottom: 0;
 		margin-top: -3px;
 		position: relative;
 		top: 3px;
 		vertical-align: baseline;
-		width: 33px;
+		width: 31px;
+		padding-top:1px
 	}
 	
 	
@@ -300,10 +318,10 @@
 	
 	
 @media print{
-	img{
-		width:100%;
-		margin:240px
+	.img_container{
 	}
+	
+	
 	.menu{
 		display:none
 	}

@@ -26,8 +26,12 @@
 			<button class="BUTTON red medium" data-role="removeAll">Rimouvi tutto</button>
 		</div>
 		
-		<img src="papers/f24.png" style="margin:0px;width:1000px"/>
-		<img src="papers/f24.png" style="margin:0px;width:1000px"/>
+		<div>
+			<div style="position:relative" class="img_container"><img src="papers/f24.png" /><div style="position:absolute; top:142px; left:120px">wer</div></div>
+		</div>
+		<div>
+			<div style="position:relative" class="img_container"><img src="papers/f24.png" /><div style="position:absolute; top:142px; left:120px">wer</div></div>
+		</div>
 		
 		
 		
@@ -38,71 +42,62 @@
 	<script>
 	
 	
-		var example = [
-						  {
-						    "id": "wg_1",
-						    "type": "text",
-						    "value": "Delega",
-						    "name": "due",
-						    "position": {
-						      "top": 61,
-						      "left": 574
-						    },
-						    "line-height": "30px",
-						    "font-size": "27px",
-						    "letter-spacing": "normal"
-						  },
-						 
-						    {
-						    "id": "wg_1",
-						    "type": "date",
-						    "value": -2208992400000,
-						    "name": "we",
-						    "position": {
-						      "top": 172,
-						      "left": 145
-						    },
-						    "font-size": "19px",
-						    "letter-spacing": "3px"
-						  },
-						  
-						  {
-						    "id": "wg_3",
-						    "type": "barcode",
-						    "value": "barcode01020304",
-						    "name": "tre",
-						    "position": {
-						      "top": 383,
-						      "left": 779
-						    }
-						  },
-						  {
-						    "id": "wg_5",
-						    "type": "text",
-						    "value": "testo1%3Cdiv%3Etesto2%3C/div%3E%3Cdiv%3Etesto3%3C/div%3E%3Cdiv%3Etesto4%3C/div%3E%3Cdiv%3Etesto5%3C/div%3E",
-						    "name": "quattro",
-						    "position": {
-						      "top": 400,
-						      "left": 268
-						    },
-						    "line-height": "20px",
-						    "font-size": "16px",
-						    "letter-spacing": "normal"
-						  },
-						  {
-						    "id": "wg_4",
-						    "type": "x",
-						    "value": true,
-						    "name": "cinque",
-						    "position": {
-						      "top": 173,
-						      "left": 867
-						    }
-						  }
-						  
-						  
-						]
-		
+		var example ={
+				  "wg_1": {
+				    "id": "wg_1",
+				    "type": "text",
+				    "name": "2",
+				    "value": {
+				      "value": "Modifica%20questo%20testo",
+				      "position": {
+				        "top": 364,
+				        "left": 417
+				      },
+				      "line-height": "17px",
+				      "font-size": "16px",
+				      "letter-spacing": "normal"
+				    }
+				  },
+				  "wg_2": {
+				    "id": "wg_2",
+				    "type": "barcode",
+				    "name": "1",
+				    "value": {
+				      "value": "Modifica questo testo",
+				      "position": {
+				        "top": 178,
+				        "left": 657
+				      }
+				    }
+				  },
+				  "wg_3": {
+				    "id": "wg_3",
+				    "type": "x",
+				    "name": "3",
+				    "value": {
+				      "value": true,
+				      "position": {
+				        "top": 209,
+				        "left": 241
+				      }
+				    }
+				  },
+				  "wg_4": {
+				    "id": "wg_4",
+				    "type": "date",
+				    "name": "4",
+				    "value": {
+				      "value": 1349042400000,
+				      "position": {
+				        "top": 420,
+				        "left": 161
+				      },
+				      "font-size": "11px",
+				      "letter-spacing": "normal"
+				    }
+				  }
+				}
+							
 		$(document).ready(function(){
 
 			
@@ -138,7 +133,7 @@
 			
 			
 			
-			
+			/*
 			_.each(example,function(elem){
 				$("body").append(getDocLateWidgetHTML(elem));
 				
@@ -146,6 +141,7 @@
 					animateWidget($(this));
 				})
 			})
+			*/
 			
 			
 			
@@ -159,48 +155,54 @@
 			
 			
 			function getJsonWidgets(){
-				var json = new Array();
+				var json = {};
 				$(".docLate-widget,.docLate-widget-locked").each(function(){
 					if($(this).css("position") == "absolute"){
-						var wg = $(this);
-						var pos = getDocLateWidgetPosition(wg);
-						var id = wg.attr("id");
-						var type = wg.attr("data-widgetType");
-						var value = getDocLateWidgetValue(wg,type);
-						var wg_name = getDocLateWidgetName(wg);
+						var $wg = $(this);
+						var pos = getDocLateWidgetPosition($wg);
+						var id = $wg.attr("id");
+						var type = $wg.attr("data-widgetType");
+						var value = getDocLateWidgetValue($wg,type);
+						var wg_name = getDocLateWidgetName($wg);
 						if(type=="x" || type == "barcode"){
-							json.push({
+							json[id] = {
 								"id" : id,
 								"type" : type,
-								"value" : value,
-								"name" : wg_name, 
-								"position" : pos
-							});
+								"name" : wg_name,
+								"value" : {
+									"value" : value, 
+									"position" : pos
+								}
+							}
 						}
 						else{
 							if(type=="text"){
-								json.push({
+								json[id] = {
 									"id" : id,
 									"type" : type,
-									"value" : value,
 									"name" : wg_name,
-									"position" : pos,
-									"line-height" : wg.find(".text").css("line-height"),
-									"font-size" : wg.find(".text").css("font-size"),
-									"letter-spacing" : wg.find(".text").css("letter-spacing"),
-								});
+									"value" : {
+										"value" : value,
+										"line-height" : $wg.find(".text").css("line-height"),
+										"font-size" : $wg.find(".text").css("font-size"),
+										"letter-spacing" : $wg.find(".text").css("letter-spacing"),
+										"position" : pos
+									}
+								};
 							}
 							else{
 								if(type=="date"){
-									json.push({
+									json[id] = {
 										"id" : id,
 										"type" : type,
-										"value" : value,
 										"name" : wg_name,
-										"position" : pos,
-										"font-size" : wg.find(".dateInput").css("font-size"),
-										"letter-spacing" : wg.find(".dateInput").css("letter-spacing"),
-									});
+										"value" : {
+											"value" : value,
+											"font-size" : $wg.find(".dateInput").css("font-size"),
+											"letter-spacing" : $wg.find(".dateInput").css("letter-spacing"),
+											"position" : pos
+										}
+									};
 								}
 							}
 						}
@@ -219,13 +221,13 @@
 					var obj = type;
 					var id = obj.id;
 					var type = obj.type;
-					var value = obj.value;
 					var name = obj.name;
-					var top = obj.position.top;
-					var left = obj.position.left;
-					var line_height = (_.is(obj["line-height"])) ? obj["line-height"] : "";
-					var font_size = (_.is(obj["font-size"])) ? obj["font-size"] : "";
-					var letter_spacing = (_.is(obj["letter-spacing"])) ? obj["letter-spacing"] : "";
+					var value = obj.value.value;
+					var top = obj.value.position.top;
+					var left = obj.value.position.left;
+					var line_height = (_.is(obj.value["line-height"])) ? obj.value["line-height"] : "";
+					var font_size = (_.is(obj.value["font-size"])) ? obj.value["font-size"] : "";
+					var letter_spacing = (_.is(obj.value["letter-spacing"])) ? obj.value["letter-spacing"] : "";
 					var position = "absolute";
 				}
 				else{
@@ -311,38 +313,38 @@
 				}
 			}
 			
-			function getDocLateWidgetPosition(wg){
-				return wg.position();
+			function getDocLateWidgetPosition($wg){
+				return $wg.position();
 			}
 			
-			function getDocLateWidgetValue(wg,type){
+			function getDocLateWidgetValue($wg,type){
 				if(type == "x"){
-					return wg.find("input").is(":checked")
+					return $wg.find("input").is(":checked")
 				}
 				else{
 					if(type == "text"){
-						return escape(wg.find(".text").html());
+						return escape($wg.find(".text").html());
 					}
 					else{
 						if(type == "date"){
-							return _.date(wg.find("input").val()).getTime();
+							return _.date($wg.find("input.dateInput").val()).getTime();
 						}
 						else{
 							if(type == "barcode"){
-								return wg.find(".text > div").html();
+								return $wg.find(".text > div").html();
 							}
 						}
 					}
 				}
 			}
 			
-			function getDocLateWidgetName(wg){
-				return wg.find("input.widgetName").val()
+			function getDocLateWidgetName($wg){
+				return $wg.find("input.widgetName").val()
 			}
 			
-			function setDocLateWidgetPosition(wg,position){
-				wg.css("top",position.top);
-				wg.css("left",position.left);
+			function setDocLateWidgetPosition($wg,position){
+				$wg.css("top",position.top);
+				$wg.css("left",position.left);
 			}
 			
 			
@@ -423,11 +425,11 @@
 				
 				$wg.hover(
 					function(){
-						$(".docLate-widget,.docLate-widget-locked").css("z-index","10000");
-						$wg.css("z-index","10010");
+						$(".docLate-widget,.docLate-widget-locked").css({"z-index":"10000","opacity":"0.5"});
+						$wg.css({"z-index":"10100","opacity":"1"});
 					},
 					function(){
-						$(".docLate-widget").css("z-index","10000");
+						$(".docLate-widget,.docLate-widget-locked").css({"z-index":"10000","opacity":"1"});
 					}
 				);
 			}
@@ -462,7 +464,7 @@
 				$wg.addClass("docLate-widget-locked");
 				$wg.removeClass("docLate-widget");
 				$wg.resizable( "destroy" );
-				$wg.find("[contentEditable]").attr("contentEditable",false);
+				//$wg.find("[contentEditable]").attr("contentEditable",false);
 				$wg.find("[data-type='date']").datepicker("destroy");
 				$wg.find("input").attr("readonly",true);
 				$wg.find(".text").click(function(){
@@ -479,7 +481,7 @@
 				$wg.resizable();
 				$wg.find("[data-type='date']").datepicker();
 				$wg.find("input").attr("readonly",false);
-				$wg.find("[contentEditable]").attr("contentEditable",true);
+				//$wg.find("[contentEditable]").attr("contentEditable",true);
 			}
 			
 			function validate(json){
